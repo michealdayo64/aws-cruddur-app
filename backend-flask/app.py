@@ -15,12 +15,12 @@ from flask_cors import CORS, cross_origin
 import os
 
 # HoneyComb ------
-from opentelemetry import trace
+'''from opentelemetry import trace
 from opentelemetry.instrumentation.flask import FlaskInstrumentor
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.trace import TracerProvider
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.sdk.trace.export import BatchSpanProcessor'''
 
 # AWS X-Ray
 from aws_xray_sdk.core import xray_recorder
@@ -41,11 +41,11 @@ LOGGER.addHandler(cw_handler)
 LOGGER.info("some message")'''
 
 # Initialize tracing and an exporter that can send data to Honeycomb
-provider = TracerProvider()
+'''provider = TracerProvider()
 processor = BatchSpanProcessor(OTLPSpanExporter())
 provider.add_span_processor(processor)
 trace.set_tracer_provider(provider)
-tracer = trace.get_tracer(__name__)
+tracer = trace.get_tracer(__name__)'''
 
 
 app = Flask(__name__)
@@ -55,8 +55,8 @@ xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
 # HoneyComb -------
-FlaskInstrumentor().instrument_app(app)
-RequestsInstrumentor().instrument()
+'''FlaskInstrumentor().instrument_app(app)
+RequestsInstrumentor().instrument()'''
 
 frontend = os.getenv('FRONTEND_URL')
 backend = os.getenv('BACKEND_URL')

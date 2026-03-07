@@ -39,7 +39,7 @@ services:
       REACT_APP_CLIENT_ID : "${REACT_APP_CLIENT_ID}"
     build: ./frontend-react-js
     ports:
-      - "3000:3000"
+     - "3000:3000"
     volumes:
       - ./frontend-react-js:/frontend-react-js
 

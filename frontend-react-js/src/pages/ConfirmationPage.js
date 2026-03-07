@@ -34,9 +34,11 @@ export default function ConfirmationPage() {
       // for this to be an okay match?
       console.log(err)
       if (err.message == 'Username cannot be empty'){
-        setCognitoErrors("You need to provide an email in order to send Resend Activiation Code")   
+        //setCognitoErrors("You need to provide an email in order to send Resend Activiation Code")   
+        console.log("You need to provide an email in order to send Resend Activiation Code")
       } else if (err.message == "Username/client id combination not found."){
-        setCognitoErrors("Email is invalid or cannot be found.")   
+        //setCognitoErrors("Email is invalid or cannot be found.")
+        console.log("Email is invalid or cannot be found.")   
       }
     }
   }
@@ -61,12 +63,14 @@ export default function ConfirmationPage() {
     }
     return false**/
     event.preventDefault();
-    setCognitoErrors("");
+    //setCognitoErrors("");
+    console.log("")
     try {
       await Auth.confirmSignUp(email, code);
       window.location.href = "/";
     } catch (error) {
-      setCognitoErrors(error.message);
+      //setCognitoErrors(error.message);
+      console.log(error.message)
     }
     return false;
   };

@@ -58,8 +58,8 @@ XRayMiddleware(app, xray_recorder)
 '''FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()'''
 
-frontend = os.getenv('FRONTEND_URL')
-backend = os.getenv('BACKEND_URL')
+frontend = os.getenv('FRONTEND_URL', 'http://localhost:5173')
+backend = os.getenv('BACKEND_URL', 'http://localhost:5000')
 origins = [frontend, backend]
 cors = CORS(
     app,
@@ -117,7 +117,7 @@ def data_create_message():
 
 
 @app.route("/api/activities/home", methods=['GET'])
-@xray_recorder.capture('activities_home')
+#@xray_recorder.capture('activities_home')
 def data_home():
     data = HomeActivities.run()
     return data, 200

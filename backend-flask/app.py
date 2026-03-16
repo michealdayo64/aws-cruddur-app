@@ -13,6 +13,7 @@ from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 import os
+from lib.cognito_jwt_token import CognitoJwtToken, extract_access_token, TokenVerifyError
 
 # HoneyComb ------
 '''from opentelemetry import trace
@@ -54,20 +55,30 @@ xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
+# Cognito JWT Token
+cognito_jwt_token = CognitoJwtToken(
+  user_pool_id=os.getenv("VITE_APP_AWS_USER_POOLS_ID"), 
+  user_pool_client_id=os.getenv("VITE_APP_CLIENT_ID"),
+  region=os.getenv("AWS_DEFAULT_REGION")
+)
+
 # HoneyComb -------
 '''FlaskInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()'''
 
-frontend = os.getenv('FRONTEND_URL', 'http://localhost:5173')
-backend = os.getenv('BACKEND_URL', 'http://localhost:5000')
+frontend = os.getenv('VITE_APP_FRONTEND_URL', 'http://localhost:5173')
+backend = os.getenv('VITE_APP_BACKEND_URL', 'http://localhost:5000')
 origins = [frontend, backend]
+
 cors = CORS(
-    app,
-    resources={r"/api/*": {"origins": origins}},
-    expose_headers="location,link",
-    allow_headers="content-type,if-modified-since",
-    methods="OPTIONS,GET,HEAD,POST"
+  app, 
+  resources={r"/api/*": {"origins": origins}},
+  headers=['Content-Type', 'Authorization'], 
+  expose_headers='Authorization',
+  methods="OPTIONS,GET,HEAD,POST"
 )
+
+#
 
 '''@app.after_request
 def after_request(response):
@@ -119,10 +130,21 @@ def data_create_message():
 @app.route("/api/activities/home", methods=['GET'])
 #@xray_recorder.capture('activities_home')
 def data_home():
-    data = HomeActivities.run()
+    access_token = extract_access_token(request.headers)
+    try:
+        claims = cognito_jwt_token.verify(access_token)
+        # authenicatied request
+        app.logger.debug("authenicated")
+        app.logger.debug(claims)
+        app.logger.debug(claims['username'])
+        data = HomeActivities.run(cognito_user_id=claims['username'])
+    except TokenVerifyError as e:
+        # unauthenicatied request
+        app.logger.debug(e)
+        app.logger.debug("unauthenicated")
+        data = HomeActivities.run()
     return data, 200
 
-##
 
 
 @app.route("/api/activities/notifications", methods=['GET'])

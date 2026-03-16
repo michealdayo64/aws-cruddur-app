@@ -19,13 +19,17 @@ export default function HomeFeedPage() {
   const [user, setUser] = React.useState(null);
   const dataFetchedRef = React.useRef(false);
 
-
   const loadData = async () => {
     try {
       const backend_url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/activities/home`;
-      const res = await fetch(backend_url, { method: "GET" });
+      const res = await fetch(backend_url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
       if (res.status === 200) {
-        const data = await res.json()
+        const data = await res.json();
         setActivities(data);
       }
     } catch (err) {

@@ -55,6 +55,7 @@ xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
 XRayMiddleware(app, xray_recorder)
 
+
 # Cognito JWT Token
 cognito_jwt_token = CognitoJwtToken(
   user_pool_id=os.getenv("VITE_APP_AWS_USER_POOLS_ID"), 

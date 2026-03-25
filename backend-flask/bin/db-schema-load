@@ -1,1 +1,14 @@
-#! /usr/bin/bash
+#! /usr/bin/env bash
+
+schema_path="$(pwd)/db/schema.sql"
+
+echo $schema_path
+
+if [ "$1" = "prod" ]; then
+  echo "Running in production mode"
+  URL=$PROD_CONNECTION_URL
+else
+  URL=$CONNECTION_URL
+fi
+
+psql $URL cruddur < $schema_path

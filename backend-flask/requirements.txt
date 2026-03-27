@@ -43,3 +43,5 @@ watchtower==3.4.0
 Werkzeug==3.1.6
 wrapt==1.17.3
 zipp==3.23.0
+psycopg[binary]
+psycopg[pool]

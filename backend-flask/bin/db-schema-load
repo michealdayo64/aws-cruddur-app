@@ -1,4 +1,12 @@
-#! /usr/bin/env bash
+#! /usr/bin/bash
+
+#! /usr/bin/bash
+
+#echo "== db-schema-load"
+CYAN='\033[1;36m'
+NO_COLOR='\033[0m'
+LABEL="db-schema-load"
+printf "${CYAN}== ${LABEL}${NO_COLOR}\n"
 
 schema_path="$(pwd)/db/schema.sql"
 
@@ -12,3 +20,5 @@ else
 fi
 
 psql $URL cruddur < $schema_path
+
+ 

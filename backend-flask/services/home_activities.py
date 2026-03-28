@@ -11,6 +11,7 @@ class HomeActivities:
         #span = trace.get_current_span()
         now = datetime.now(timezone.utc).astimezone()
         #span.set_attribute("app.now", now.isoformat())
+        print("Hello")
         sql = query_wrap_array("""
             SELECT
                 activities.uuid,

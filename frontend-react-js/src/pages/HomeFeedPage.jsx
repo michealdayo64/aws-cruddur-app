@@ -30,6 +30,7 @@ export default function HomeFeedPage() {
       });
       if (res.status === 200) {
         const data = await res.json();
+        console.log(data)
         setActivities(data);
       }
     } catch (err) {

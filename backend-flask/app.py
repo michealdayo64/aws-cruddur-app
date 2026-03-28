@@ -71,6 +71,8 @@ frontend = os.getenv('VITE_APP_FRONTEND_URL', 'http://localhost:5173')
 backend = os.getenv('VITE_APP_BACKEND_URL', 'http://localhost:5000')
 origins = [frontend, backend]
 
+print(origins)
+
 cors = CORS(
   app, 
   resources={r"/api/*": {"origins": origins}},
@@ -78,6 +80,8 @@ cors = CORS(
   expose_headers='Authorization',
   methods="OPTIONS,GET,HEAD,POST"
 )
+
+#print("Hello")
 
 #
 
@@ -131,6 +135,7 @@ def data_create_message():
 @app.route("/api/activities/home", methods=['GET'])
 #@xray_recorder.capture('activities_home')
 def data_home():
+    print("hello")
     access_token = extract_access_token(request.headers)
     try:
         claims = cognito_jwt_token.verify(access_token)

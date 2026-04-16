@@ -1,14 +1,15 @@
 import json
 import psycopg2
+import os
 
 def lambda_handler(event, context):
     user = event['request']['userAttributes']
     try:
         conn = psycopg2.connect(
-            PROD_CONNECTION_URL=(os.getenv('PROD_CONNECTION_URL')),
+            os.getenv('PROD_CONNECTION_URL')
         )
         cur = conn.cursor()
-        cur.execute("INSERT INTO users (display_name, handle, email, cognito_user_id) VALUES(%s, %s, %s)", (user['name'], user['preferred_username'], user['email'], user['sub']))
+        cur.execute("INSERT INTO users (display_name, handle, email, cognito_user_id) VALUES(%s, %s, %s, %s)", (user['name'], user['preferred_username'], user['email'], user['sub']))
         conn.commit() 
 
     except (Exception, psycopg2.DatabaseError) as error:

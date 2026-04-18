@@ -41,6 +41,7 @@ services:
       VITE_APP_AWS_COGNITO_REGION: "${VITE_APP_AWS_COGNITO_REGION}"
       VITE_APP_AWS_USER_POOLS_ID: "${VITE_APP_AWS_USER_POOLS_ID}"
       VITE_APP_CLIENT_ID: "${VITE_APP_CLIENT_ID}"
+    command: npm run dev -- --host
     volumes:
       - ./frontend-react-js:/frontend-react-js
       - /frontend-react-js/node_modules

@@ -50,6 +50,7 @@ tracer = trace.get_tracer(__name__)'''
 
 
 app = Flask(__name__)
+app.run(host="0.0.0.0", port=5000, debug=True)
 # AWS X-Ray -----
 xray_url = os.getenv("AWS_XRAY_URL")
 xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
@@ -183,10 +184,11 @@ def data_search():
 @app.route("/api/activities", methods=['POST', 'OPTIONS'])
 @cross_origin()
 def data_activities():
-    user_handle = 'andrewbrown'
+    user_handle = 'michealdayo64'
     message = request.json['message']
     ttl = request.json['ttl']
-    model = CreateActivity.run(message, user_handle, ttl)
+    create_activity = CreateActivity()
+    model = create_activity.run(message, user_handle, ttl)
     if model['errors'] is not None:
         return model['errors'], 422
     else:

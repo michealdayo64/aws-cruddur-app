@@ -21,7 +21,7 @@ CREATE TABLE public.activities (
   replies_count integer default 0,
   reposts_count integer default 0,
   likes_count integer default 0,
-  reply_to_activity_uuid integer,
+  reply_to_activity_uuid integer default 0,
   expires_at timestamp,
   created_at timestamp default current_timestamp NOT NULL
 );

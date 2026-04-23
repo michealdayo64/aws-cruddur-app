@@ -5,10 +5,12 @@ import SigninPage from "./pages/SigninPage";
 import SignupPage from "./pages/SignupPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import RecoverPage from "./pages/RecoverPage";
+import MessageGroupsPage from "./pages/MessageGroupsPage";
+import MessageGroupNewPage from './pages/MessageGroupNewPage';
 /**import UserFeedPage from "./pages/UserFeedPage";
 
 
-import MessageGroupsPage from "./pages/MessageGroupsPage";
+
 import MessageGroupPage from "./pages/MessageGroupPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import NotificationsFeedPage from "./pages/NotificationsFeedPage";**/
@@ -52,9 +54,17 @@ const router = createBrowserRouter([
     path: "/confirm",
     element: <ConfirmationPage />,
   },
-   {
+  {
     path: "/forgot",
     element: <RecoverPage />,
+  },
+  {
+    path: "/messages",
+    element: <MessageGroupsPage />,
+  },
+  /**{
+    path: "/messages/new/:handle",
+    element: <MessageGroupNewPage />,
   },
   /**{
     path: "/notifications",
@@ -65,10 +75,7 @@ const router = createBrowserRouter([
     path: "/@:handle",
     element: <UserFeedPage />,
   },
-  {
-    path: "/messages",
-    element: <MessageGroupsPage />,
-  },
+  
   {
     path: "/messages/@:handle",
     element: <MessageGroupPage />,

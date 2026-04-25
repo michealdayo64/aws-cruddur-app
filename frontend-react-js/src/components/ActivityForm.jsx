@@ -15,6 +15,7 @@ export default function ActivityForm(props) {
   }
 
   const onsubmit = async (event) => {
+    console.log(`${message} for ${ttl}`)
     event.preventDefault();
     try {
       const backend_url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/activities`

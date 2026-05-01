@@ -4,7 +4,8 @@ from lib.ddb import Ddb
 from lib.db import Db
 
 class MessageGroups:
-  def run(cognito_user_id):
+  
+  def run(self, cognito_user_id):
     model = {
       'errors': None,
       'data': None

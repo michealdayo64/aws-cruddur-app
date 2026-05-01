@@ -22,8 +22,8 @@ class Db:
     
     green = '\033[92m'
     no_color = '\033[0m'
-    print("\n")
-    print(f'{green} Load SQL Template: {template_path} {no_color}')
+    #print("\n")
+    #print(f'{green} Load SQL Template: {template_path} {no_color}')
 
     with open(template_path, 'r') as f:
       template_content = f.read()
@@ -41,8 +41,8 @@ class Db:
   def print_sql(self,title,sql, params={}):
     cyan = '\033[96m'
     no_color = '\033[0m'
-    print(f'{cyan} SQL STATEMENT-[{title}]------{no_color}')
-    print(sql,params)
+    #print(f'{cyan} SQL STATEMENT-[{title}]------{no_color}')
+    #print(sql,params)
 
   # SQL QUERY ERROR PRINT TEXT
   def print_sql_err(self,err):

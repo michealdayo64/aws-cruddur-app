@@ -18,6 +18,7 @@ export default function MessageGroupPage() {
   const params = useParams();
 
   const loadUserShortData = async () => {
+    console.log(params.handle)
     try {
       const backend_url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/users/@${params.handle}/short`
       const res = await fetch(backend_url, {
@@ -60,8 +61,8 @@ export default function MessageGroupPage() {
     if (dataFetchedRef.current) return;
     dataFetchedRef.current = true;
 
-    loadMessageGroupsData();
     loadUserShortData();
+    loadMessageGroupsData();
     checkAuth(setUser);
   }, [])
   return (

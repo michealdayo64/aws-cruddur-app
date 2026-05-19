@@ -9,6 +9,7 @@ from services.user_activities import *
 from services.home_activities import *
 from services.notifications_activities import *
 from services.show_activity import *
+from services.users_short import *
 from flask import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
@@ -220,7 +221,7 @@ def data_activities():
     #access_token = extract_access_token(request.headers)
     #claims = cognito_jwt_token.verify(access_token)
     #app.logger.debug(claims)
-    user_handle = "michealdayo64"
+    user_handle = "omoboymicheal64"
     message = request.json['message']
     ttl = request.json['ttl']
 

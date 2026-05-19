@@ -14,6 +14,7 @@ class MessageGroups:
     db = Db()
 
     sql = db.template('users','uuid_from_cognito_user_id')
+    print(sql)
     my_user_uuid = db.query_value(sql,{
       'cognito_user_id': cognito_user_id
     })

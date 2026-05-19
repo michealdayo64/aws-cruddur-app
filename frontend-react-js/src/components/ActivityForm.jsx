@@ -1,7 +1,7 @@
 import './ActivityForm.css';
 import React from "react";
-import process from 'process';
 import BombIcon from './svg/bomb.svg?react';
+import { jwtDecode } from 'jwt-decode';
 
 export default function ActivityForm(props) {
   const [count, setCount] = React.useState(0);
@@ -16,10 +16,15 @@ export default function ActivityForm(props) {
 
   const onsubmit = async (event) => {
     console.log(`${message} for ${ttl}`)
+     const token = localStorage.getItem("access_token")
+      const username = jwtDecode(token)
+      console.log(username)
     event.preventDefault();
     try {
       const backend_url = `${import.meta.env.VITE_APP_BACKEND_URL}/api/activities`
       console.log('onsubmit payload', message)
+      
+      
       const res = await fetch(backend_url, {
         method: "POST",
         headers: {
@@ -28,7 +33,8 @@ export default function ActivityForm(props) {
         },
         body: JSON.stringify({
           message: message,
-          ttl: ttl
+          ttl: ttl,
+          username: username
         }),
       });
       let data = await res.json();

@@ -25,8 +25,8 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor'''
 
 # AWS X-Ray
-from aws_xray_sdk.core import xray_recorder
-from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
+#from aws_xray_sdk.core import xray_recorder
+#from aws_xray_sdk.ext.flask.middleware import XRayMiddleware
 
 # CloudWatch
 #import watchtower
@@ -52,10 +52,11 @@ tracer = trace.get_tracer(__name__)'''
 
 app = Flask(__name__)
 app.run(host="0.0.0.0", port=5000, debug=True)
+app.logger.setLevel("DEBUG")
 # AWS X-Ray -----
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
-XRayMiddleware(app, xray_recorder)
+#xray_url = os.getenv("AWS_XRAY_URL")
+#xray_recorder.configure(service='Cruddur', dynamic_naming=xray_url)
+#XRayMiddleware(app, xray_recorder)
 
 
 # Cognito JWT Token
@@ -170,14 +171,16 @@ def data_create_message():
 @app.route("/api/activities/home", methods=['GET'])
 #@xray_recorder.capture('activities_home')
 def data_home():
-    print("hello")
+    
+    app.logger.debug("Hello")
     access_token = extract_access_token(request.headers)
+    app.logger.debug(f"Access token: {access_token}")
     try:
         claims = cognito_jwt_token.verify(access_token)
         # authenicatied request
         app.logger.debug("authenicated")
         app.logger.debug(claims)
-        app.logger.debug(claims['username'])
+        app.logger.debug(claims.get('sub'))
         data = HomeActivities().run(cognito_user_id=claims['username'])
     except TokenVerifyError as e:
         # unauthenicatied request
@@ -195,7 +198,7 @@ def data_notifications():
 
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
-@xray_recorder.capture('activities_users')
+#@xray_recorder.capture('activities_users')
 def data_handle(handle):
     model = UserActivities.run(handle)
     if model['errors'] is not None:
@@ -221,10 +224,15 @@ def data_activities():
     #access_token = extract_access_token(request.headers)
     #claims = cognito_jwt_token.verify(access_token)
     #app.logger.debug(claims)
+<<<<<<< HEAD
     user_handle = "omoboymicheal64"
+=======
+    user_handle = request.json['username']
+>>>>>>> 79712b06ea467ed9773c4df416f02218d3e6aed2
     message = request.json['message']
     ttl = request.json['ttl']
 
+    app.logger.debug(user_handle)
     app.logger.debug(message)
     app.logger.debug(ttl)
     

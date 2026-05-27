@@ -21,8 +21,10 @@ class MessageGroups:
 
     print(f"UUID: {my_user_uuid}")
 
-    ddb = Ddb().client()
-    data = Ddb().list_message_groups(ddb, my_user_uuid)
+    ddb = Ddb()
+
+    ddb1 = ddb.client()
+    data = ddb.list_message_groups(ddb1, my_user_uuid)
     print("list_message_groups:",data)
 
     model['data'] = data

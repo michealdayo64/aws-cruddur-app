@@ -1,4 +1,4 @@
-from lib.db import db
+from lib.db import Db
 
 class UsersShort:
   
